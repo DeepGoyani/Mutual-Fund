@@ -1,42 +1,44 @@
-"use client";
-import * as React from "react";
-import Link from "next/link";
-import useSWR from "swr";
-import { Card, CardContent, CardActions, Typography, Chip, Button, Stack, CardActionArea } from "@mui/material";
-import { useRouter } from "next/navigation";
+import Link from 'next/link'
 
-const fetcher = (url) => fetch(url).then((r) => r.json());
+export default function FundCard({ fund }) {
+  if (!fund) return null
 
-export default function FundCard({ schemeCode, schemeName, fundHouse, category }) {
-  const router = useRouter();
-  const { data } = useSWR(() => (schemeCode ? `/api/scheme/${schemeCode}` : null), fetcher, { revalidateOnFocus: false });
-  const latest = data?.data?.[0];
-  const open = () => {
-    if (schemeCode) router.push(`/scheme/${schemeCode}`);
-  };
   return (
-    <Card variant="outlined" sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
-      <Link href={schemeCode ? `/scheme/${schemeCode}` : "#"} style={{ flexGrow: 1 }} onClick={(e)=>{ if(!schemeCode){ e.preventDefault(); } }}>
-        <CardActionArea sx={{ height: "100%" }} onClick={(e)=>{ if(!schemeCode) e.preventDefault(); }}>
-          <CardContent>
-            <Typography variant="subtitle2" color="text.secondary" gutterBottom>
-              {fundHouse || category || "Mutual Fund"}
-            </Typography>
-            <Typography variant="h6" sx={{ fontWeight: 600, lineHeight: 1.2 }} gutterBottom>
-              {schemeName}
-            </Typography>
-            <Stack direction="row" spacing={1} sx={{ mt: 1 }}>
-              {category && <Chip size="small" label={category} />}
-            </Stack>
-            <Typography variant="body2" sx={{ mt: 1 }}>
-              Latest: {latest?.nav ?? "—"} on {latest?.date ?? "—"}
-            </Typography>
-          </CardContent>
-        </CardActionArea>
-      </Link>
-      <CardActions sx={{ px: 2, pb: 2 }}>
-        <Button onClick={open} variant="contained" size="small">Open</Button>
-      </CardActions>
-    </Card>
-  );
+    <Link href={`/scheme/${fund.schemeCode}`}>
+      <div className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-200 border border-gray-100 hover:border-brand-navy cursor-pointer">
+        <div className="mb-4">
+          <h3 className="font-semibold text-gray-900 text-lg mb-2 line-clamp-2">
+            {fund.schemeName}
+          </h3>
+          <p className="text-sm text-gray-600">
+            {fund.amc} • {fund.category}
+          </p>
+        </div>
+
+        <div className="grid grid-cols-2 gap-4 mb-4">
+          <div>
+            <p className="text-xs text-gray-500 uppercase tracking-wide">Latest NAV</p>
+            <p className="text-lg font-semibold text-gray-900">
+              ₹{fund.nav ? fund.nav.toFixed(2) : 'N/A'}
+            </p>
+          </div>
+          <div>
+            <p className="text-xs text-gray-500 uppercase tracking-wide">Date</p>
+            <p className="text-sm text-gray-600">
+              {fund.date || 'N/A'}
+            </p>
+          </div>
+        </div>
+
+        <div className="flex items-center justify-between">
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+            {fund.type || 'Open-ended'}
+          </span>
+          <svg className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
+        </div>
+      </div>
+    </Link>
+  )
 }
