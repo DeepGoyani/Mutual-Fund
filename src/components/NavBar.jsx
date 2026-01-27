@@ -1,33 +1,58 @@
-"use client";
-import Link from "next/link";
-import ThemeToggle from "@/components/ThemeToggle";
-import LanguageSwitcher from "@/components/LanguageSwitcher";
+'use client'
+import Link from 'next/link'
+import { useState } from 'react'
+import ThemeToggle from './ThemeToggle'
+import SearchBar from './SearchBar'
 
 export default function NavBar() {
+  const [isOpen, setIsOpen] = useState(false)
+
   return (
-    <nav className="w-full sticky top-0 z-50 border-b bg-gradient-to-b from-white/90 to-white/70 backdrop-blur supports-[backdrop-filter]:bg-white/60">
-      <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-        <Link href="/" className="font-semibold tracking-tight text-[15px] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded">
-          <span className="inline-flex items-center gap-2">
-            <span className="inline-block h-5 w-5 rounded bg-black text-white grid place-items-center text-[11px]">MF</span>
-            Mutual Fund Dashboard
-          </span>
-        </Link>
-        <div className="flex items-center gap-1 text-sm">
-          <Link href="/learn" className="px-3 py-2 rounded-md hover:bg-black/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">Learn</Link>
-          <Link href="/funds" className="px-3 py-2 rounded-md hover:bg-black/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">Funds</Link>
-          <Link href="/learn/tools" className="px-3 py-2 rounded-md hover:bg-black/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">Tools</Link>
-          <span className="mx-1 text-black/30">|</span>
-          <Link href="/market" className="px-3 py-2 rounded-md hover:bg-black/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">Market</Link>
-          <Link href="/market/compare" className="px-3 py-2 rounded-md bg-black text-white hover:bg-black/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">Compare</Link>
-          <Link href="/market/about" className="px-3 py-2 rounded-md hover:bg-black/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">About</Link>
+    <nav className="bg-white border-b border-gray-200 sticky top-0 z-50">
+      <div className="max-w-6xl mx-auto px-4">
+        <div className="flex justify-between items-center h-16">
+          <Link href="/" className="flex items-center">
+            <span className="text-xl font-bold" style={{color: 'var(--brand-navy)'}}>
+              MutualFund
+            </span>
+          </Link>
+
+          <div className="hidden md:flex items-center space-x-8">
+            <Link href="/learn" className="text-gray-700 hover:text-brand-navy">Learn</Link>
+            <Link href="/funds" className="text-gray-700 hover:text-brand-navy">Funds</Link>
+            <Link href="/market" className="text-gray-700 hover:text-brand-navy">Market</Link>
+            <Link href="/learn/tools" className="text-gray-700 hover:text-brand-navy">Tools</Link>
+          </div>
+
+          <div className="flex items-center space-x-4">
+            <SearchBar />
+            <ThemeToggle />
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="md:hidden p-2 rounded-md text-gray-700 hover:text-brand-navy"
+            >
+              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                {isOpen ? (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                ) : (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                )}
+              </svg>
+            </button>
+          </div>
         </div>
-        <div className="hidden sm:flex items-center gap-2">
-          <LanguageSwitcher />
-          <ThemeToggle />
-        </div>
+
+        {isOpen && (
+          <div className="md:hidden py-4 border-t border-gray-200">
+            <div className="flex flex-col space-y-2">
+              <Link href="/learn" className="text-gray-700 hover:text-brand-navy py-2">Learn</Link>
+              <Link href="/funds" className="text-gray-700 hover:text-brand-navy py-2">Funds</Link>
+              <Link href="/market" className="text-gray-700 hover:text-brand-navy py-2">Market</Link>
+              <Link href="/learn/tools" className="text-gray-700 hover:text-brand-navy py-2">Tools</Link>
+            </div>
+          </div>
+        )}
       </div>
     </nav>
-  );
+  )
 }
-
