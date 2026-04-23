@@ -1,19 +1,46 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    turbopack: true,
-  },
   images: {
-    domains: ['api.mfapi.in'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'api.mfapi.in',
+        port: '',
+        pathname: '/**',
+      },
+    ],
     formats: ['image/webp', 'image/avif'],
   },
   async rewrites() {
     return [
       {
         source: '/api/mf/:path*',
-        destination: 'https://api.mfapi.in/:path*',
+        destination: 'https://mutual-fund-q5qt.onrender.com/api/mf/:path*',
+      },
+      {
+        source: '/api/funds',
+        destination: 'https://mutual-fund-q5qt.onrender.com/api/funds',
+      },
+      {
+        source: '/api/funds/:path*',
+        destination: 'https://mutual-fund-q5qt.onrender.com/api/funds/:path*',
+      },
+      {
+        source: '/api/scheme/:path*',
+        destination: 'https://mutual-fund-q5qt.onrender.com/api/scheme/:path*',
+      },
+      {
+        source: '/api/market/:path*',
+        destination: 'https://mutual-fund-q5qt.onrender.com/api/market/:path*',
+      },
+      {
+        source: '/api/cron/:path*',
+        destination: 'https://mutual-fund-q5qt.onrender.com/api/cron/:path*',
       },
     ]
+  },
+  env: {
+    BACKEND_URL: 'https://mutual-fund-q5qt.onrender.com',
   },
 }
 

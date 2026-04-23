@@ -3,5 +3,39 @@
   "outputDirectory": ".next",
   "installCommand": "npm install",
   "framework": "nextjs",
-  "regions": ["hkg1"]
+  "regions": ["hkg1"],
+  "env": {
+    "NEXT_PUBLIC_BACKEND_URL": "https://mutual-fund-q5qt.onrender.com"
+  },
+  "build": {
+    "env": {
+      "NEXT_PUBLIC_BACKEND_URL": "https://mutual-fund-q5qt.onrender.com"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/api/mf/:path*",
+      "destination": "https://mutual-fund-q5qt.onrender.com/api/mf/:path*"
+    },
+    {
+      "source": "/api/funds",
+      "destination": "https://mutual-fund-q5qt.onrender.com/api/funds"
+    },
+    {
+      "source": "/api/funds/:path*",
+      "destination": "https://mutual-fund-q5qt.onrender.com/api/funds/:path*"
+    },
+    {
+      "source": "/api/scheme/:path*",
+      "destination": "https://mutual-fund-q5qt.onrender.com/api/scheme/:path*"
+    },
+    {
+      "source": "/api/market/:path*",
+      "destination": "https://mutual-fund-q5qt.onrender.com/api/market/:path*"
+    },
+    {
+      "source": "/api/cron/:path*",
+      "destination": "https://mutual-fund-q5qt.onrender.com/api/cron/:path*"
+    }
+  ]
 }
