@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 
 const LANGS = [
   { code: "en", label: "English" },
@@ -7,19 +7,29 @@ const LANGS = [
   { code: "gu", label: "ગુજરાતી" },
 ];
 
+function getStoredLang() {
+  if (typeof window === "undefined") return "en";
+  return localStorage.getItem("mf-lang") || "en";
+}
+
+function subscribe(callback) {
+  window.addEventListener("storage", callback);
+  return () => window.removeEventListener("storage", callback);
+}
+
 export default function LanguageSwitcher({ onChange }) {
-  const [lang, setLang] = useState("en");
-  useEffect(() => {
-    const stored = typeof window !== "undefined" && localStorage.getItem("mf-lang");
-    const initial = stored || "en";
-    setLang(initial);
-    onChange?.(initial);
-  }, [onChange]);
+  const lang = useSyncExternalStore(
+    subscribe,
+    getStoredLang,
+    () => "en"
+  );
 
   function handleChange(e) {
     const val = e.target.value;
-    setLang(val);
-    if (typeof window !== "undefined") localStorage.setItem("mf-lang", val);
+    if (typeof window !== "undefined") {
+      localStorage.setItem("mf-lang", val);
+      window.dispatchEvent(new StorageEvent("storage", { key: "mf-lang" }));
+    }
     onChange?.(val);
   }
 

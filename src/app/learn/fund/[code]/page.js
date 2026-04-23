@@ -1,4 +1,3 @@
-import FundDetail from "@/components/FundDetail";
 import EmptyState from "@/components/EmptyState";
 import { fetchFund } from "@/utils/fetchFund";
 import NavChart from "@/components/NavChart";

@@ -1,4 +1,6 @@
+'use client'
 import Link from "next/link";
+import { AddToWatchlistButton } from "@/components/WatchlistButton";
 
 export default function FundSummaryCard({ fund }) {
   if (!fund) return null;
@@ -11,7 +13,11 @@ export default function FundSummaryCard({ fund }) {
           Code
           <span className="inline-block rounded bg-black/5 px-2 py-0.5 font-medium text-black/70">{meta?.scheme_code}</span>
         </span>
-        <span className="text-[11px] text-black/40">MFAPI</span>
+        <AddToWatchlistButton 
+          code={meta?.scheme_code} 
+          name={meta?.scheme_name || meta?.schemeName}
+          size="small"
+        />
       </div>
       <h4 className="font-semibold mb-2 leading-snug line-clamp-2">{meta?.scheme_name || meta?.schemeName}</h4>
       <div className="flex items-center gap-3">

@@ -1,28 +1,45 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useSyncExternalStore, useCallback } from 'react'
+
+function getStoredTheme() {
+  if (typeof window === 'undefined') return 'light'
+  const saved = localStorage.getItem('theme')
+  if (saved) return saved
+  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+}
+
+function subscribe(callback) {
+  window.addEventListener('storage', callback)
+  return () => window.removeEventListener('storage', callback)
+}
 
 export default function ThemeToggle() {
-  const [isDark, setIsDark] = useState(false)
+  const theme = useSyncExternalStore(
+    subscribe,
+    getStoredTheme,
+    () => 'light'
+  )
 
-  useEffect(() => {
-    const saved = localStorage.getItem('theme')
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-    setIsDark(saved === 'dark' || (!saved && prefersDark))
-  }, [])
+  const isDark = theme === 'dark'
 
-  useEffect(() => {
+  // Apply theme to document
+  if (typeof document !== 'undefined') {
     if (isDark) {
       document.documentElement.classList.add('dark')
-      localStorage.setItem('theme', 'dark')
     } else {
       document.documentElement.classList.remove('dark')
-      localStorage.setItem('theme', 'light')
     }
+  }
+
+  const toggle = useCallback(() => {
+    const newTheme = isDark ? 'light' : 'dark'
+    localStorage.setItem('theme', newTheme)
+    window.dispatchEvent(new StorageEvent('storage', { key: 'theme' }))
   }, [isDark])
 
   return (
     <button
-      onClick={() => setIsDark(!isDark)}
+      onClick={toggle}
       className="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
       aria-label="Toggle theme"
     >

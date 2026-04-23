@@ -3,6 +3,8 @@ import Link from 'next/link'
 import { useState } from 'react'
 import ThemeToggle from './ThemeToggle'
 import SearchBar from './SearchBar'
+import WatchlistButton from './WatchlistButton'
+import AlertManager from './AlertManager'
 
 export default function NavBar() {
   const [isOpen, setIsOpen] = useState(false)
@@ -17,14 +19,18 @@ export default function NavBar() {
             </span>
           </Link>
 
-          <div className="hidden md:flex items-center space-x-8">
-            <Link href="/learn" className="text-gray-700 hover:text-brand-navy">Learn</Link>
+          <div className="hidden md:flex items-center space-x-6">
+            <Link href="/dashboard" className="text-gray-700 hover:text-brand-navy">Dashboard</Link>
+            <Link href="/portfolio" className="text-gray-700 hover:text-brand-navy">Portfolio</Link>
+            <Link href="/goals" className="text-gray-700 hover:text-brand-navy">Goals</Link>
             <Link href="/funds" className="text-gray-700 hover:text-brand-navy">Funds</Link>
             <Link href="/market" className="text-gray-700 hover:text-brand-navy">Market</Link>
             <Link href="/learn/tools" className="text-gray-700 hover:text-brand-navy">Tools</Link>
           </div>
 
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-3">
+            <AlertManager />
+            <WatchlistButton />
             <SearchBar />
             <ThemeToggle />
             <button
@@ -45,7 +51,9 @@ export default function NavBar() {
         {isOpen && (
           <div className="md:hidden py-4 border-t border-gray-200">
             <div className="flex flex-col space-y-2">
-              <Link href="/learn" className="text-gray-700 hover:text-brand-navy py-2">Learn</Link>
+              <Link href="/dashboard" className="text-gray-700 hover:text-brand-navy py-2">Dashboard</Link>
+              <Link href="/portfolio" className="text-gray-700 hover:text-brand-navy py-2">Portfolio</Link>
+              <Link href="/goals" className="text-gray-700 hover:text-brand-navy py-2">Goals</Link>
               <Link href="/funds" className="text-gray-700 hover:text-brand-navy py-2">Funds</Link>
               <Link href="/market" className="text-gray-700 hover:text-brand-navy py-2">Market</Link>
               <Link href="/learn/tools" className="text-gray-700 hover:text-brand-navy py-2">Tools</Link>

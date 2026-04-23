@@ -1,13 +1,51 @@
+'use client'
+import { calculateVolatility, calculateMaxDrawdown, getRiskLevel, getRiskColor } from '@/utils/riskMetrics'
+import { AddToWatchlistButton } from '@/components/WatchlistButton'
+
 export default function FundDetail({ fund, limit = 30 }) {
   if (!fund) return null;
   const { meta, data } = fund;
   const rows = (data || []).slice(0, limit);
+  
+  // Calculate risk metrics
+  const volatility = calculateVolatility(data, 30);
+  const maxDrawdown = calculateMaxDrawdown(data);
+  const riskLevel = getRiskLevel(volatility);
+  const riskColorClass = getRiskColor(riskLevel);
+  
   return (
     <div className="rounded-xl border border-black/10 bg-white shadow-sm overflow-hidden">
       <div className="px-5 py-4 border-b bg-gray-50/60">
-        <h2 className="font-semibold text-lg leading-tight">{meta?.scheme_name || meta?.schemeName}</h2>
-        <div className="text-xs text-black/60">Code: <span className="bg-black/5 px-1.5 py-0.5 rounded">{meta?.scheme_code || meta?.schemeCode}</span></div>
+        <div className="flex justify-between items-start">
+          <div>
+            <h2 className="font-semibold text-lg leading-tight">{meta?.scheme_name || meta?.schemeName}</h2>
+            <div className="text-xs text-black/60 mt-1">Code: <span className="bg-black/5 px-1.5 py-0.5 rounded">{meta?.scheme_code || meta?.schemeCode}</span></div>
+          </div>
+          <AddToWatchlistButton 
+            code={meta?.scheme_code || meta?.schemeCode} 
+            name={meta?.scheme_name || meta?.schemeName} 
+            size="medium"
+          />
+        </div>
+        
+        {/* Risk Metrics */}
+        {volatility && (
+          <div className="flex flex-wrap gap-2 mt-3">
+            <span className={`px-2 py-1 rounded text-xs font-medium ${riskColorClass}`}>
+              Risk: {riskLevel}
+            </span>
+            <span className="px-2 py-1 rounded text-xs bg-gray-100 text-gray-700">
+              Volatility: {volatility.toFixed(2)}%
+            </span>
+            {maxDrawdown && (
+              <span className="px-2 py-1 rounded text-xs bg-red-50 text-red-700">
+                Max Drawdown: {maxDrawdown.maxDrawdown.toFixed(2)}%
+              </span>
+            )}
+          </div>
+        )}
       </div>
+      
       <div className="px-5 pt-4">
         {rows.length > 1 && (
           <Sparkline series={rows} />
