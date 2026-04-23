@@ -1,4 +1,4 @@
-import './globals.css'
+import '@/styles/globals.css'
 import { Toaster } from 'react-hot-toast'
 import NavBar from '@/components/NavBar'
 import Footer from '@/components/Footer'
@@ -11,10 +11,10 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className="font-sans antialiased">
+    <html lang="en" data-theme="light">
+      <body className="font-sans antialiased bg-gradient-to-br from-blue-50 via-white to-purple-50 min-h-screen">
         <NavBar />
-        <main className="min-h-[calc(100vh-56px)]">
+        <main className="min-h-[calc(100vh-64px)]">
           {children}
         </main>
         <Footer />
