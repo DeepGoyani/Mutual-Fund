@@ -1,9 +1,8 @@
 import '@/styles/globals.css'
-import { Toaster } from 'react-hot-toast'
 import NavBar from '@/components/NavBar'
 import Footer from '@/components/Footer'
+import ClientLayout from './ClientLayout'
 
-/** @type {import('next').Metadata} */
 export const metadata = {
   title: 'Mutual Fund Platform',
   description: 'Comprehensive mutual fund investment platform with real-time data',
@@ -30,7 +29,7 @@ export default function RootLayout({ children }) {
           {children}
         </main>
         <Footer />
-        <Toaster />
+        <ClientLayout />
       </body>
     </html>
   )

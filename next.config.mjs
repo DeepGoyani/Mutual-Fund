@@ -42,6 +42,12 @@ const nextConfig = {
   // Optimize for Vercel
   poweredByHeader: false,
   compress: true,
+  // Fix workspace root warning
+  ...(process.cwd().includes('mutual-fund') ? {} : {
+    turbopack: {
+      root: './mutual-fund'
+    }
+  }),
   env: {
     BACKEND_URL: 'https://mutual-fund-q5qt.onrender.com',
   },
