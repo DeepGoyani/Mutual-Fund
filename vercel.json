@@ -1,17 +1,6 @@
 {
-  "buildCommand": "npm run build",
-  "outputDirectory": ".next",
-  "installCommand": "npm install",
   "framework": "nextjs",
-  "regions": ["hkg1"],
-  "env": {
-    "NEXT_PUBLIC_BACKEND_URL": "https://mutual-fund-q5qt.onrender.com"
-  },
-  "build": {
-    "env": {
-      "NEXT_PUBLIC_BACKEND_URL": "https://mutual-fund-q5qt.onrender.com"
-    }
-  },
+  "buildCommand": "npm run build",
   "rewrites": [
     {
       "source": "/api/mf/:path*",
