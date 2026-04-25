@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Debug Test</title>
+    <link href="/icon.svg" rel="icon">
+    <style>
+        /* Test basic CSS variables */
+        :root {
+            --color-primary-500: #0ea5e9;
+            --color-background: #ffffff;
+            --color-text: #0f172a;
+        }
+        
+        body {
+            background: var(--color-background);
+            color: var(--color-text);
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            padding: 20px;
+        }
+        
+        .test-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            margin: 20px 0;
+        }
+        
+        .test-button {
+            background: var(--color-primary-500);
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+        }
+        
+        .test-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>CSS Debug Test</h1>
+    <p>If you can see this styled correctly, CSS is working.</p>
+    
+    <div class="test-card">
+        <h2>Test Card</h2>
+        <p>This should have a white background, border, and shadow.</p>
+        <button class="test-button">Test Button</button>
+    </div>
+    
+    <div class="test-gradient">
+        <h2>Gradient Test</h2>
+        <p>This should have a gradient background.</p>
+    </div>
+    
+    <script>
+        console.log('CSS Debug Test loaded');
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded, checking CSS variables...');
+            const rootStyle = getComputedStyle(document.documentElement);
+            console.log('Primary color:', rootStyle.getPropertyValue('--color-primary-500'));
+        });
+    </script>
+</body>
+</html>
