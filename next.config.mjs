@@ -9,39 +9,43 @@ const nextConfig = {
         pathname: '/**',
       },
     ],
-    formats: ['image/webp', 'image/avif'],
+    unoptimized: true, // Faster builds
   },
   async rewrites() {
     return [
       {
         source: '/api/mf/:path*',
-        destination: 'https://mutual-fund-q5qt.onrender.com/api/mf/:path*',
+        destination: `https://mutual-fund-q5qt.onrender.com/api/mf/:path*`,
       },
       {
         source: '/api/funds',
-        destination: 'https://mutual-fund-q5qt.onrender.com/api/funds',
+        destination: `https://mutual-fund-q5qt.onrender.com/api/funds`,
       },
       {
         source: '/api/funds/:path*',
-        destination: 'https://mutual-fund-q5qt.onrender.com/api/funds/:path*',
+        destination: `https://mutual-fund-q5qt.onrender.com/api/funds/:path*`,
       },
       {
         source: '/api/scheme/:path*',
-        destination: 'https://mutual-fund-q5qt.onrender.com/api/scheme/:path*',
+        destination: `https://mutual-fund-q5qt.onrender.com/api/scheme/:path*`,
       },
       {
         source: '/api/market/:path*',
-        destination: 'https://mutual-fund-q5qt.onrender.com/api/market/:path*',
+        destination: `https://mutual-fund-q5qt.onrender.com/api/market/:path*`,
       },
       {
         source: '/api/cron/:path*',
-        destination: 'https://mutual-fund-q5qt.onrender.com/api/cron/:path*',
+        destination: `https://mutual-fund-q5qt.onrender.com/api/cron/:path*`,
       },
     ]
   },
+  // Optimize for Vercel
+  poweredByHeader: false,
+  compress: true,
   env: {
     BACKEND_URL: 'https://mutual-fund-q5qt.onrender.com',
   },
+  swcMinify: true,
 }
 
 export default nextConfig
