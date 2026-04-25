@@ -9,7 +9,8 @@ module.exports = {
         'brand-slate': '#64748b'
       },
       fontFamily: {
-        'inter': ['Inter', 'sans-serif']
+        'sans': ['system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+        'mono': ['SF Mono', 'Monaco', 'Cascadia Code', 'Roboto Mono', 'Consolas', 'Courier New', 'monospace']
       }
     }
   },
